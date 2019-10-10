@@ -124,7 +124,14 @@ public class secondActivity  extends Activity {
         Signup_com.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                if(btnaccept.isChecked()==false){
+
+                if(id_check.isChecked()==false){
+                    Toast.makeText(secondActivity.this, "아이디 중복을 확인해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else if(pw_check.isChecked()==false){
+                    Toast.makeText(secondActivity.this, "비밀번호를 확인해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else if(btnaccept.isChecked()==false){
                     Toast.makeText(secondActivity.this, "약관에 동의해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else {

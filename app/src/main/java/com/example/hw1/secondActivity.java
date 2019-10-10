@@ -57,33 +57,38 @@ public class secondActivity  extends Activity {
             public void onClick(View v){
                 boolean id_chk = false;
 
-                try{
-                    BufferedReader br = new BufferedReader(new FileReader(getFilesDir()+"user_data9.txt"));
-                    String readStr = "";
-                    String str = null;
-                    while(((str = br.readLine()) != null)){
-                        //readStr += str +"\n";
-                        int i=0;
-                        while(str.charAt(i)!=' ' && str.charAt(i)!='\n' && str.charAt(i)!='\0'){
-                            i++;
+                if(user_id.getText().toString().length() == 0){
+                    Toast.makeText(secondActivity.this, "아이디를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    try {
+                        BufferedReader br = new BufferedReader(new FileReader(getFilesDir() + "user_data9.txt"));
+                        String readStr = "";
+                        String str = null;
+                        while (((str = br.readLine()) != null)) {
+                            //readStr += str +"\n";
+                            int i = 0;
+                            while (str.charAt(i) != ' ' && str.charAt(i) != '\n' && str.charAt(i) != '\0') {
+                                i++;
+                            }
+                            readStr = str.substring(0, i);
+                            if (readStr.equals(user_id.getText().toString())) {
+                                Toast.makeText(secondActivity.this, "이미 사용중인 아이디입니다.", Toast.LENGTH_SHORT).show();
+                                id_chk = true;
+                                id_check.setChecked(false);
+                                break;
+                            }
                         }
-                        readStr = str.substring(0,i);
-                        if(readStr.equals(user_id.getText().toString())){
-                            Toast.makeText(secondActivity.this, "이미 사용중인 아이디입니다.", Toast.LENGTH_SHORT).show();
-                            id_chk = true;
-                            id_check.setChecked(false);
-                            break;
+                        if (!id_chk) {
+                            Toast.makeText(secondActivity.this, "사용가능한 아이디입니다.", Toast.LENGTH_SHORT).show();
+                            id_check.setChecked(true);
                         }
+                        br.close();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                    if(!id_chk){
-                        Toast.makeText(secondActivity.this, "사용가능한 아이디입니다.", Toast.LENGTH_SHORT).show();
-                        id_check.setChecked(true);
-                    }
-                    br.close();
-                }catch (FileNotFoundException e){
-                    e.printStackTrace();
-                }catch (IOException e) {
-                    e.printStackTrace();
                 }
             }
         });
@@ -96,7 +101,12 @@ public class secondActivity  extends Activity {
                 int al=0;
                 int i=0;
                 String pw = user_pw.getText().toString();
-                if( pw.length() > 6 || pw.length() < 5){
+                if(pw.length() == 0){
+                    Toast.makeText(secondActivity.this, "비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    pw_check.setChecked(false);
+                }
+                else if( pw.length() > 6 || pw.length() < 5){
+                    Toast.makeText(secondActivity.this, "비밀번호를 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
                     pw_check.setChecked(false);
                 }
                 else {
